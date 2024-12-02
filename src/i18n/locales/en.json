@@ -1,0 +1,40 @@
+{
+  "language": "Language",
+  "about": "About",
+  "features": "Features",
+  "contact": "Contact",
+  "hero": {
+    "title": "Discover Africa's Beauty",
+    "subtitle": "Experience the richness of African culture, landscapes, and adventures through our immersive platform",
+    "cta": "Start Exploring"
+  },
+  "journal": {
+    "title": "Travel Journal",
+    "subtitle": "Stories and experiences from our community of African explorers",
+    "masaiMara": {
+      "title": "A Week in the Masai Mara",
+      "excerpt": "Witnessing the great migration and living among the Maasai people - an unforgettable journey through Kenya's most famous reserve."
+    },
+    "capeTown": {
+      "title": "Cape Town: Where Mountains Meet the Sea",
+      "excerpt": "Exploring the vibrant culture, stunning landscapes, and rich history of South Africa's mother city."
+    },
+    "zanzibar": {
+      "title": "Spice Islands: Zanzibar's Hidden Gems",
+      "excerpt": "Discovering the aromatic markets, pristine beaches, and cultural heritage of Tanzania's archipelago."
+    }
+  },
+  "articles": {
+    "readMore": "Read More",
+    "culture": {
+      "category": "Culture",
+      "title": "The Living Heritage of African Traditions",
+      "excerpt": "Dive deep into the rich tapestry of African cultural practices, from ancient rituals to modern celebrations that keep traditions alive."
+    },
+    "wildlife": {
+      "category": "Wildlife",
+      "title": "Conservation Success Stories",
+      "excerpt": "Exploring the remarkable efforts and achievements in protecting Africa's diverse wildlife and their natural habitats."
+    }
+  }
+}

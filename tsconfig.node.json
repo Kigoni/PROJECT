@@ -1,0 +1,27 @@
+{
+  "$schema": "./schemas/tsconfig.schema.json",
+  "compilerOptions": {
+    "composite": true,           // Enable composite projects
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    // "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    /* Emit settings */
+    "noEmit": false  // Keep it here for Node-related utility files
+  },
+  "include": ["vite.config.ts"]
+}

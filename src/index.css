@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #AFEEEE;       /* Custom primary color */
+    --color-text: #1a1a1a;          /* Custom text color */
+    --color-background: #ffffff;    /* Custom background color */
+  }
+
+  body {
+    @apply bg-[var(--color-background)] text-[var(--color-text)] antialiased; /* Apply custom CSS variables */
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl;
+  }
+
+  .nav-link {
+    @apply px-4 py-2 text-sm font-medium hover:text-primary transition-colors;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold mb-6;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70;
+  }
+
+  .bento-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .parallax-section {
+    @apply relative overflow-hidden;
+  }
+
+  .language-selector {
+    @apply glass-card px-4 py-2 flex items-center gap-2 cursor-pointer;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glassmorphism */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Parallax Base Styles */
+.parallax-wrapper {
+  @apply overflow-hidden relative;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 rounded-full;
+}
