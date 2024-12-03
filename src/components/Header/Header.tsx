@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const pathname = window.location.pathname;
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-black/20 backdrop-blur-sm">
+    <header className="fixed w-full top-0 z-50 bg-black/20 backdrop-blur">
       <div className="container mx-auto px-4 py-6"> {/* Adjusted padding */}
         <div className="flex items-center">
           {/* Logo - Left */}
