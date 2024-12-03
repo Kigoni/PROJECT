@@ -26,6 +26,7 @@ export default function PlatformSection({ title, description, platforms, columns
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
+        {/* Section Header */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -41,15 +42,42 @@ export default function PlatformSection({ title, description, platforms, columns
           </p>
         </motion.div>
 
-        <div className={`grid md:grid-cols-${columns} gap-8`}>
+        {/* Grid of Platform Cards */}
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns} gap-8`}
+        >
           {platforms.map((platform, index) => (
             <motion.div
               key={platform.title}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform"
             >
-              <PlatformCard {...platform} />
+              <a
+                href={platform.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                {/* Image Container */}
+                <div className="relative h-48 bg-gray-900">
+                  <img
+                    src={platform.image}
+                    alt={platform.title}
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-white">
+                    {platform.title}
+                  </h3>
+                  <p className="text-gray-300 mt-2">
+                    {platform.description}
+                  </p>
+                </div>
+              </a>
             </motion.div>
           ))}
         </div>

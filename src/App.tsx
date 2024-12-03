@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Journal from './components/JournalSection/JournalSection';
+import { ThematicAreas } from './components/ThematicAreas/ThematicAreas';
 import Articles from './components/Articles/Articles';
 // import WorldMap from './components/WorldMap';
 // import Chatbot from "./components/Chatbot";
@@ -47,6 +48,7 @@ function App() {
       <Header />
       <Hero />
       <Journal />
+      <ThematicAreas />
       <Articles />
       {/* <Chatbot
         title="Afrika Journals Assistant"

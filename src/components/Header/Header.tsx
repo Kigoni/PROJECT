@@ -1,10 +1,9 @@
-// components/Header/Header.tsx
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { LanguageSelector } from "./LanguageSelector";
-import { NavLink } from "./NavLink";
+import  NavLink  from "./NavLink";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -12,26 +11,55 @@ const Header: React.FC = () => {
   const pathname = window.location.pathname;
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-black/20 backdrop-blur-md">
-      <div className="container mx-auto px-4 py-4">
+    <header className="fixed w-full top-0 z-50 bg-black/20 backdrop-blur-sm">
+      <div className="container mx-auto px-4 py-6"> {/* Adjusted padding */}
         <div className="flex items-center">
           {/* Logo - Left */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-[#AFEEEE] text-2xl font-bold w-1/4"
+            className="w-1/4 flex flex-col items-start"
           >
-            Afrika Journals
+            {/* Logo Image */}
+            <img
+              src="/logo.png" // Replace with the correct path to your logo
+              alt="Afrika Journals Logo"
+              className="h-18 md:h-16" // Adjusted logo size
+            />
+            {/* File Path Text */}
+            <span className="text-sm text-gray-400 mt-2 block">
+              Afrika Journals
+            </span>
           </motion.div>
 
           {/* Navigation - Center */}
           <nav className="hidden md:flex items-center justify-center gap-8 flex-1">
-            <NavLink href="/" isActive={pathname === "/"}>
+            <NavLink
+              href="/"
+              isActive={pathname === "/"}
+              className="text-base font-semibold text-white hover:text-[#AFEEEE] transition-colors"
+            >
               {t("Home")}
             </NavLink>
-            <NavLink href="/features">{t("features")}</NavLink>
-            <NavLink href="/testimonials">{t("testimonials")}</NavLink>
-            <NavLink href="/faq" isActive={pathname === "/faq"}>{t("FAQ")}</NavLink>
+            <NavLink
+              href="/features"
+              className="text-base font-semibold  text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("Features")}
+            </NavLink>
+            <NavLink
+              href="/testimonials"
+              className="text-base font-semibold text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("Testimonials")}
+            </NavLink>
+            <NavLink
+              href="/faq"
+              isActive={pathname === "/faq"}
+              className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("FAQ")}
+            </NavLink>
           </nav>
 
           {/* Actions - Right */}
@@ -63,12 +91,31 @@ const Header: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden py-4 space-y-4"
           >
-            <NavLink href="/" isActive={pathname === "/"}>
+            <NavLink
+              href="/"
+              isActive={pathname === "/"}
+              className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
+            >
               {t("home")}
             </NavLink>
-            <NavLink href="/features">{t("features")}</NavLink>
-            <NavLink href="/testimonials">{t("testimonials")}</NavLink>
-            <NavLink href="/faq">{t("faq")}</NavLink>
+            <NavLink
+              href="/features"
+              className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("features")}
+            </NavLink>
+            <NavLink
+              href="/testimonials"
+              className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("testimonials")}
+            </NavLink>
+            <NavLink
+              href="/faq"
+              className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
+            >
+              {t("faq")}
+            </NavLink>
           </motion.nav>
         )}
       </div>
