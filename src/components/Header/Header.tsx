@@ -1,9 +1,9 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Menu } from "lucide-react";
-import { motion } from "framer-motion";
-import { LanguageSelector } from "./LanguageSelector";
-import  NavLink  from "./NavLink";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Menu } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { LanguageSelector } from './LanguageSelector';
+import NavLink from './NavLink';
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
             <img
               src="/logo.png" // Replace with the correct path to your logo
               alt="Afrika Journals Logo"
-              className="h-18 md:h-16" // Adjusted logo size
+              className="h-20 md:h-12" // Adjusted logo size
             />
             {/* File Path Text */}
             <span className="text-sm text-gray-400 mt-2 block">
@@ -35,26 +35,26 @@ const Header: React.FC = () => {
           {/* Navigation - Center */}
           <nav className="hidden md:flex items-center justify-center gap-8 flex-1">
             <NavLink
-              href="/"
+              to="/"
               isActive={pathname === "/"}
               className="text-base font-semibold text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("Home")}
             </NavLink>
             <NavLink
-              href="/features"
-              className="text-base font-semibold  text-white hover:text-[#AFEEEE] transition-colors"
+              to="/features"
+              className="text-base font-semibold text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("Features")}
             </NavLink>
             <NavLink
-              href="/testimonials"
+              to="/testimonials"
               className="text-base font-semibold text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("Testimonials")}
             </NavLink>
             <NavLink
-              href="/faq"
+              to="/faq"
               isActive={pathname === "/faq"}
               className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
             >
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
             <LanguageSelector />
 
             <a
-              href="/dashboard"
+              href="https://afrijour.web.app/"
               className="px-6 py-2 bg-[#AFEEEE] text-black font-semibold rounded-lg
                        hover:bg-white transition-all duration-300 transform hover:scale-105
                        shadow-lg hover:shadow-[#AFEEEE]/50"
@@ -92,26 +92,26 @@ const Header: React.FC = () => {
             className="md:hidden py-4 space-y-4"
           >
             <NavLink
-              href="/"
+              to="/"
               isActive={pathname === "/"}
               className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("home")}
             </NavLink>
             <NavLink
-              href="/features"
+              to="/features"
               className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("features")}
             </NavLink>
             <NavLink
-              href="/testimonials"
+              to="/testimonials"
               className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("testimonials")}
             </NavLink>
             <NavLink
-              href="/faq"
+              to="/faq"
               className="text-base font-semibold uppercase text-white hover:text-[#AFEEEE] transition-colors"
             >
               {t("faq")}

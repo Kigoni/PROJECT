@@ -39,7 +39,7 @@ const repositories = [
 
 export default function ResearchPlatforms() {
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen relative">
+    <div className="bg-[#dff7f7] min-h-screen relative">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_25%),radial-gradient(circle_at_70%_60%,rgba(147,51,234,0.05),transparent_25%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(236,72,153,0.05),transparent_25%)]" />
@@ -51,6 +51,11 @@ export default function ResearchPlatforms() {
         platforms={indexers}
         columns={3}
       />
+
+      {/* Horizontal Decorative Divider */}
+      <div className="flex justify-center my-10">
+        <div className="w-11/12 h-[2px] bg-gradient-to-r from-gray-700 via-black to-gray-700 shadow-lg" />
+      </div>
 
       {/* Research Repositories */}
       <PlatformSection

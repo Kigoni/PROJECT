@@ -11,6 +11,22 @@
 
   body {
     @apply bg-[var(--color-background)] text-[var(--color-text)] antialiased; /* Apply custom CSS variables */
+
+    /* Ensure the body and form are properly displayed */
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Dark background for contrast */
+    color: #fff;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 }
 
@@ -41,6 +57,110 @@
 
   .language-selector {
     @apply glass-card px-4 py-2 flex items-center gap-2 cursor-pointer;
+  }
+
+  /* Container for form (QAForm) */
+  .qa-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    padding: 20px;
+    background-color: #1a1a1a; /* Darker background for the form section */
+  }
+
+  /* Style for form wrapper */
+  .qa-form-wrapper {
+    background-color: #2c2c2c;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+    position: relative;
+  }
+
+  /* Label styles */
+  label {
+    font-size: 14px;
+    color: #b0b0b0; /* Lighter color for labels */
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Input and textarea styling */
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #333333;
+    border: 1px solid #444444;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s, background-color 0.3s;
+  }
+
+  input:focus, textarea:focus {
+    border: 1px solid #03a9f4;
+    background-color: #444444;
+    box-shadow: 0 0 5px rgba(3, 169, 244, 0.5);
+  }
+
+  /* Submit button styling */
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #03a9f4;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #0288d1;
+  }
+
+  /* Disabled button state */
+  button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+
+  /* Style for any error or message popups */
+  .alert {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  /* Adjust the width of form elements on smaller screens */
+  @media (max-width: 600px) {
+    .qa-form-wrapper {
+      padding: 20px;
+      width: 100%;
+    }
+
+    input, textarea, button {
+      font-size: 16px;
+    }
+  }
+
+  /* Disclaimer Popup Styles */
+  .disclaimer-popup {
+    @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-[1000];
+  }
+
+  .disclaimer-content {
+    @apply bg-white p-5 rounded-lg max-w-xl w-full text-center;
   }
 }
 

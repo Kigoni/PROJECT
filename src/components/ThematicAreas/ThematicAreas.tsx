@@ -66,7 +66,7 @@ export function ThematicAreas() {
   }
 
   return (
-    <div className="relative bg-[#dff7f7] py-2">
+    <div className="relative bg-[#ccd6e8] py-2">
       <div className="flex items-center justify-center gap-2 text-sm font-medium text-teal-700">
         <BookOpen className="h-4 w-4" />
         <span>Research Areas</span>

@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import ChatLogItem from "../components/chat/ChatLogItem";
-import TypingAnimation from "../components/chat/TypingAnimation";
-import axiosChat from "../api/axioChat";
-import { ChatCompletion } from "./data/chatData";
-import toast from "react-hot-toast";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BotMessageSquare, MessageCircle, Send, X } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
+import ChatLogItem from "../components/chat/ChatLogItem";
+import TypingAnimation from "../components/chat/TypingAnimation";
+import toast from "react-hot-toast";
 
 interface ChatMessage {
   type: "user" | "bot";
@@ -59,29 +56,57 @@ const ChatBot: React.FC<ChatBotProps> = ({
     setInputValue("");
   };
 
-  const sendMessage = (message: string) => {
-    const URL = "/completions";
+  const sendMessage = async (message: string) => {
+    const URL = "https://openrouter.ai/api/v1/chat/completions";
+    const apiKey = import.meta.env.VITE_OPEN_ROUTES_API_KEY;
+
+    if (!apiKey) {
+      toast.error("API Key is missing!");
+      setIsLoading(false);
+      return;
+    }
 
     const data = {
-      model: aiModel ? aiModel : "mistralai/mistral-7b-instruct:free",
+      model: aiModel || "openai/gpt-4",
       messages: [{ role: "user", content: message }],
     };
 
     setIsLoading(true);
 
-    axiosChat<ChatCompletion>({ method: "POST", url: URL, data: data })
-      .then((response) => {
-        console.log(response);
+    try {
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        toast.error("API Error: " + result.error.message);
+        setIsLoading(false);
+        return;
+      }
+
+      const botMessage = result.choices?.[0]?.message?.content;
+
+      if (botMessage) {
         setChatLog((prevChatLog) => [
           ...prevChatLog,
-          { type: "bot", message: response.choices[0].message.content },
+          { type: "bot", message: botMessage },
         ]);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
-      });
+      } else {
+        toast.error("Unexpected response format");
+      }
+    } catch (error) {
+      console.error("Failed to fetch chat response:", error);
+      toast.error("Error communicating with the chatbot API");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -89,82 +114,54 @@ const ChatBot: React.FC<ChatBotProps> = ({
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [isLoading]);
+  }, [chatLog]);
 
   return (
     <>
-      {/* component */}
       <div>
+        {/* Chat Toggle Button */}
         <button
           id="chatbot"
-          className={`z-[500] is-lunar-green fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium border rounded-full w-16 h-16 m-0 cursor-pointer border-gray-200 bg-none  ${
-            isChatOpen ? "chat-open" : "chat-closed"
-          }`}
-          type="button"
+          className="z-[500] fixed bottom-4 right-4 flex items-center justify-center text-sm font-medium border rounded-full w-16 h-16 bg-[#32CD32] hover:bg-[#28a745] cursor-pointer"
+          onClick={toggleChat}
           aria-haspopup="dialog"
           aria-expanded={isChatOpen}
-          onClick={toggleChat}
         >
-          <MessageCircle className="size-10 text-yellow-500 hover:text-green-800" />
+          <MessageCircle className="text-[#FFD700] w-8 h-8" />
         </button>
+
+        {/* Chat Window */}
         {isChatOpen && (
           <div
-            id="hs-chatbot-container"
-            className={`fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-yellow-50 borrder-r-2 border border-gray-200 rounded-xl w-[440px] h-[600px] z-[500] ${
-              isChatOpen ? "chat-open" : "chat-closed"
-            }`}
+            className="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-[#ccd6e8] border border-gray-200 rounded-xl w-[440px] h-[600px] z-[500]"
           >
-            {/* Heading */}
-            <div className="flex justify-between items-center space-y-1.5 p-6 rounded-t-xl bg-background border-b">
+            {/* Header */}
+            <div className="flex justify-between items-center space-y-1.5 p-6 rounded-t-xl bg-[#32CD32] border-b">
               <div className="flex flex-row">
-                <span className="flex-shrink-0 mr-4 inline-flex items-center justify-center size-14 rounded-full bg-primary">
-                  <span className="font-medium text-white leading-none">
-                    <BotMessageSquare className="size-10" />
-                  </span>
+                <span className="flex-shrink-0 mr-4 inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#32CD32]">
+                  <BotMessageSquare className="text-[#FFD700] w-8 h-8" />
                 </span>
                 <div>
-                  <h2 className="font-semibold text-xl text-primary tracking-tight">
+                  <h2 className="font-semibold text-xl text-white tracking-tight">
                     {title}
                   </h2>
-                  <p className=" text-muted-foreground mt-2">{subtitle}</p>
+                  <p className="text-gray-200 mt-2">{subtitle}</p>
                 </div>
               </div>
-
               <button
-                type="button"
                 onClick={toggleChat}
-                className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-primary transition-all  dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
-                data-hs-overlay="#hs-focus-management-modal"
+                className="inline-flex justify-center items-center h-8 w-8 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
               >
-                <span className="sr-only">Close</span>
                 <X />
               </button>
             </div>
-            <div id="hs-message-container" className="px-6 pb-8">
-              {/* Chat Container */}
+
+            {/* Chat Log */}
+            <div className="px-6 pb-8">
               <div
                 ref={chatContainerRef}
-                id="chat-container"
-                className="pr-4 h-[400px]"
-                style={{
-                  minWidth: "100%",
-                  overflowY: "scroll",
-                }}
+                className="pr-4 h-[400px] overflow-y-scroll"
               >
-                <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-                  <span className="flex-shrink-0 inline-flex items-center justify-center h-[2.375rem] w-[2.375rem] rounded-full bg-primary">
-                    <span className="text-sm font-medium text-white leading-none">
-                      <BotMessageSquare />
-                    </span>
-                  </span>
-
-                  <p className="leading-relaxed">
-                    <span className="block font-bold text-muted-foreground">
-                      {botName}
-                    </span>
-                    <p className="text-sm text-foreground">{welcomeMessage}</p>
-                  </p>
-                </div>
                 {chatLog.map((message, index) => (
                   <ChatLogItem
                     key={index}
@@ -174,31 +171,30 @@ const ChatBot: React.FC<ChatBotProps> = ({
                   />
                 ))}
                 {isLoading && (
-                  <div key={chatLog.length} className="flex justify-start">
-                    <div className="bg-gray-200 rounded-lg p-4 text-white max-w-sm">
-                      <TypingAnimation />
-                    </div>
+                  <div className="flex justify-start">
+                    <TypingAnimation />
                   </div>
                 )}
               </div>
-              {/* Input box  */}
+
+              {/* Input Section */}
               <div className="flex items-center pt-0">
                 <form
                   className="flex items-center justify-center w-full space-x-2"
                   onSubmit={handleSubmit}
                 >
                   <Input
-                    className="flex h-10 w-full rounded-md "
+                    className="flex h-10 w-full rounded-md"
                     placeholder="Type your message"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                   />
                   <Button
-                    variant={"outline"}
-                    className="text-primary"
+                    variant="outline"
+                    className="bg-[#FFD700] hover:bg-[#FFC107] text-white w-10 h-10 flex items-center justify-center rounded-full"
                     type="submit"
                   >
-                    <Send />
+                    <Send className="w-4 h-4" />
                   </Button>
                 </form>
               </div>

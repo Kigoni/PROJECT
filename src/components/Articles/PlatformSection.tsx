@@ -37,7 +37,7 @@ export default function PlatformSection({ title, description, platforms, columns
           <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-6">
             {title}
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-black max-w-2xl mx-auto text-lg">
             {description}
           </p>
         </motion.div>

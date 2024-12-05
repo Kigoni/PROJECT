@@ -1,147 +1,76 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Sphere,
-  Graticule,
-} from "react-simple-maps";
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 
-// Journal data for each African country
-type CountryData = {
-  id: number;
-  country: string;
-  journal_count: number;
-  top_journal: string;
-};
+const INITIAL_TOOLTIP_STATE = { content: '', x: 0, y: 0, visible: false };
 
-type CountryInfo = {
-  countryName: string;
-  journalCount: number;
-  topJournal: string;
-};
-
-const geoUrl =
-  "https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/africa.geojson";
-
-const WorldMap: React.FC = () => {
-  const [tooltipContent, setTooltipContent] = useState<CountryInfo | null>(null);
-  const [countryData, setCountryData] = useState<{ [key: string]: CountryData }>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchCountryData = async () => {
-      try {
-        const response = await fetch("https://aphrc.site/journal_api/api/country/");
-        const data = await response.json();
-        const countryMap: { [key: string]: CountryData } = {};
-        data.forEach((country: CountryData) => {
-          countryMap[country.id] = country;
-        });
-        setCountryData(countryMap);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching country data:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchCountryData();
-  }, []);
-
-  const handleMouseEnter = (geo: any) => {
-    const country = countryData[geo.properties.cartodb_id];
-    if (country) {
-      setTooltipContent({
-        countryName: country.country,
-        journalCount: country.journal_count,
-        topJournal: country.top_journal,
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setTooltipContent(null);
-  };
-
-  const handleCountryClick = (countryName: string) => {
-    if (countryName) {
-      navigate(`/analytics?country=${encodeURIComponent(countryName)}`);
-    }
-  };
-
-  if (isLoading) {
-    return <div className="text-center text-white">Loading map data...</div>;
-  }
+const Worldmap: React.FC = () => {
+  const [tooltip, setTooltip] = useState(INITIAL_TOOLTIP_STATE);
 
   return (
-    <div className="relative w-full h-auto">
-      <ComposableMap
-        projectionConfig={{
-          rotate: [-10, 0, 0],
-          scale: 280,
-        }}
-        style={{ width: "100%", height: "auto" }}
-      >
-        <Sphere
-          id="sphere"
-          fill="#FFFFFF"
-          stroke="#E4E5E6"
-          strokeWidth={0.5}
-        />
-        <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-        <Geographies geography={geoUrl}>
-          {({ geographies }) =>
-            geographies.map((geo) => {
-              const country = countryData[geo.properties.cartodb_id];
-              return (
+    <div className="relative min-h-screen flex flex-col items-center" style={{ backgroundColor: '#ccd6e8' }}>
+      {/* Header */}
+      <header className="mt-10 mb-6 text-center">
+        <h1 className="text-4xl font-extrabold text-gray-800">
+          <span className="bg-gradient-to-r from-[#2ECC71] via-[#FFD700] to-[#E67E22] text-transparent bg-clip-text">
+            Browse African Countries' Journals
+          </span>
+        </h1>
+        <p className="text-lg text-gray-600 mt-4">
+          Click on any country to explore its rich academic and research contributions.
+        </p>
+      </header>
+
+      {/* Map Container */}
+      <div className="relative w-3/5 h-3/5 mx-auto shadow-lg rounded-lg overflow-hidden border border-gray-300">
+        <ComposableMap
+          projection="geoMercator"
+          projectionConfig={{ scale: 324, center: [20, 5] }}
+          className="w-full h-full"
+        >
+          <Geographies geography="https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/africa.geojson">
+            {({ geographies }) =>
+              geographies.map((geo) => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  onMouseEnter={() => handleMouseEnter(geo)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={() =>
-                    handleCountryClick(country?.country || "Unknown Country")
-                  }
                   style={{
-                    default: {
-                      fill: "#ffd372",
-                      stroke: "#888",
-                      strokeWidth: 0.75,
-                    },
-                    hover: {
-                      fill: "#ffb347",
-                      stroke: "#555",
-                      strokeWidth: 0.9,
-                    },
-                    pressed: {
-                      fill: "#ff9c33",
-                      stroke: "#333",
-                      strokeWidth: 1,
-                    },
+                    default: { fill: '#ffd372', stroke: '#888', strokeWidth: 0.75 },
+                    hover: { fill: '#ffb347', stroke: '#555', strokeWidth: 0.9 },
+                    pressed: { fill: '#ffb347', stroke: '#555', strokeWidth: 0.9 },
                   }}
+                  onMouseMove={(e) =>
+                    setTooltip({
+                      content: geo.properties.name,
+                      x: e.clientX,
+                      y: e.clientY,
+                      visible: true,
+                    })
+                  }
+                  onMouseLeave={() =>
+                    setTooltip((prev) => ({ ...prev, visible: false }))
+                  }
+                  onClick={() =>
+                    (window.location.href = `https://afrijour.web.app/?query=${geo.properties.name
+                      .replace(/\s+/g, '')
+                      .toLowerCase()}`)
+                  }
                 />
-              );
-            })
-          }
-        </Geographies>
-      </ComposableMap>
+              ))
+            }
+          </Geographies>
+        </ComposableMap>
 
-      {tooltipContent && (
-        <Tooltip id="country-tooltip">
-          <div className="p-4 rounded shadow-xl bg-gray-800 text-white">
-            <h3 className="font-bold">{tooltipContent.countryName}</h3>
-            <p>Number of Journals: {tooltipContent.journalCount}</p>
-            <p>Top Journal: {tooltipContent.topJournal}</p>
+        {tooltip.visible && (
+          <div
+            className="absolute bg-gray-50 px-3 py-2 rounded-lg shadow-lg text-sm pointer-events-none transform -translate-x-1/2 -translate-y-full z-10 border border-gray-200"
+            style={{ left: tooltip.x, top: tooltip.y - 10 }}
+          >
+            <span className="font-medium text-gray-800">{tooltip.content}</span>
           </div>
-        </Tooltip>
-      )}
+        )}
+      </div>
     </div>
   );
 };
 
-export default WorldMap;
+export default Worldmap;

@@ -63,22 +63,22 @@ const Footer: React.FC<FooterProps> = ({ translation }) => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-white text-black">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex flex-col gap-6">
               <div className="h-12 w-48 bg-primary/10 rounded flex items-center justify-center">
-                <span className="text-primary font-bold text-xl">AFRIJOUR</span>
+                <span className="text-yellow-500 text-primary font-bold text-xl">AFRIKA JOURNALS</span>
               </div>
-              <p className="text-gray-400 max-w-md">
+              <p className="text-yellow-500 max-w-md">
                 {translation?.footer?.description || 
                   "For more information about our services, privacy practices, or terms of use, please visit the relevant sections below. Connect with us on social media to stay updated on the latest news and features."}
               </p>
-              <div className="flex flex-col gap-4">
+              <div className="text-yellow-500 flex flex-col gap-4">
                 <a href={`mailto:${translation?.footer?.contactEmail || 'info@afrijour.com'}`} 
-                   className="text-primary hover:text-primary/80 transition-colors">
+                   className="text-yellow-500 text-primary hover:text-primary/80 transition-colors">
                   {translation?.footer?.contactEmail || "info@afrijour.com"}
                 </a>
                 <SocialLinks />
@@ -100,18 +100,18 @@ const Footer: React.FC<FooterProps> = ({ translation }) => {
             <div className="flex items-center gap-2 text-gray-400">
               <GlobeIcon size={20} />
               <select 
-                className="bg-transparent border-none focus:ring-0 cursor-pointer hover:text-primary transition-colors"
+                className="bg-transparent border-none focus:ring-0 cursor-pointer text-yellow-300 hover:text-yellow-500"
                 defaultValue="en"
               >
                 <option value="en">English</option>
                 <option value="pt">Português</option>
-                <option value="zu">isiZulu</option>
+                <option value="zu">Zulu</option>
                 <option value="fr">Français</option>
                 <option value="sw">Kiswahili</option>
                 <option value="es">Español</option>
               </select>
             </div>
-            <p className="text-gray-400 text-center">
+            <p className="text-black text-center">
               {translation?.footer?.copyright || "© 2024 AfriJour. All rights reserved."}
             </p>
           </div>

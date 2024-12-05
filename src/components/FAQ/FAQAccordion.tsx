@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,11 +19,11 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full">
       {faqs.map((faq, index) => (
         <div
           key={index}
-          className="rounded-xl overflow-hidden bg-gradient-to-r p-[1px] from-cyan-500/20 to-purple-500/20"
+          className="relative rounded-xl w-full overflow-visible bg-gradient-to-r p-[1px] from-cyan-500/20 to-purple-500/20"
         >
           <div className="bg-gray-900/80 rounded-xl">
             <button
@@ -39,7 +39,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 <ChevronDown className="w-5 h-5 text-cyan-400" />
               </motion.div>
             </button>
-            
+
             <AnimatePresence mode="sync">
               {openIndex === index && (
                 <motion.div
@@ -50,7 +50,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   style={{ overflow: "hidden" }}
                 >
-                  <div className="px-6 pb-4 text-gray-300">
+                  <div className="w-full px-6 pb-4 text-gray-300">
                     {faq.answer}
                   </div>
                 </motion.div>

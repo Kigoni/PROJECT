@@ -1,16 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+
+const images = [
+  "/Hero.webp",
+  "/Hero2.jpeg",
+  "/Hero3.jpeg",
+  "/Hero4.webp"
+];
 
 const Hero: React.FC = () => {
   const { t } = useTranslation();
   const { scrollY } = useScroll();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Enhanced parallax effects
   const yForeground = useTransform(scrollY, [0, 500], [0, 200]);
   const yBackground = useTransform(scrollY, [0, 500], [0, -300]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.5]);
+
+  // Preload images for seamless transitions
+  useEffect(() => {
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  // Image cycling with interval
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 30000); // Change image every 30 seconds
+
+    return () => clearInterval(timer);
+  }, []);
 
   const scrollToContent = () => {
     const nextSection = document.getElementById("content");
@@ -22,16 +47,30 @@ const Hero: React.FC = () => {
   return (
     <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Layers */}
+        {/* Background Overlay */}
         <div className="absolute inset-0 bg-black/50 z-10" />
 
-        {/* Parallax Background */}
+        {/* Parallax Background with Smooth Transition */}
         <motion.div style={{ y: yBackground }} className="absolute inset-0 z-0">
-          <img
-            src="/Hero.webp"
-            alt="African landscape"
-            className="w-full h-full object-cover scale-110"
-          />
+          <AnimatePresence mode="sync">
+            {images.map((image, index) => (
+              currentImageIndex === index && (
+                <motion.img
+                  key={index}
+                  src={image}
+                  alt="African landscape"
+                  className="absolute inset-0 w-full h-full object-cover scale-110"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    duration: 2.5, // Smooth blending duration
+                    ease: [0.43, 0.13, 0.23, 0.96], // Custom bezier for ultra-smooth transitions
+                  }}
+                />
+              )
+            ))}
+          </AnimatePresence>
         </motion.div>
 
         {/* Foreground Parallax */}
@@ -54,11 +93,11 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="prose prose-lg prose-invert mx-auto max-w-3xl"
           >
-            <p className="text-xl text-gray-300 mb-8 y-1 bg-black/50 px-2 py-1 rounded shadow-lg">
+            <p className="text-xl text-gray-300 mb-8 bg-black/50 px-2 py-1 rounded shadow-lg">
               Welcome to Afrika Journals, where the spirit of African
-              scholarship rises, A repository of brilliance, where knowledge
+              scholarship rises. A repository of brilliance, where knowledge
               diversifies. Here, we cradle the voices of a continent vast,
-              Curating wisdom, preserving legacies that will forever last.
+              curating wisdom, preserving legacies that will forever last.
             </p>
           </motion.div>
 
@@ -73,11 +112,10 @@ const Hero: React.FC = () => {
                 Discover the Vibrant Tapestry of African Knowledge
               </h2>
               <p className="text-white bg-black/50 px-2 py-1 rounded shadow-lg">
-                Afrika Journals lights the path through intellect's room. With journals 
-                vast and insightful articles, we serve as a comprehensive repository for
-                scholarly publications, journals and a meticulous indexer of academic articles,
-                fostering accessibility and advancing the dissemination of knowledge 
-                within the African research landscape.
+                Afrika Journals lights the path through intellect's room. With
+                journals vast and insightful articles, we serve as a
+                comprehensive repository for scholarly publications, fostering
+                accessibility and advancing knowledge dissemination.
               </p>
             </div>
 
@@ -86,29 +124,31 @@ const Hero: React.FC = () => {
                 Empowering African Scholars
               </h2>
               <p className="text-white bg-black/50 px-2 py-1 rounded shadow-lg">
-                To the scholars and dreamers, the thinkers profound, Afrika
-                Journals stands as your platform, where greatness is crowned. We
-                amplify voices, elevating each pen. 
-                 Share your insights, let your research unfold.
-                Submit your journals—treasures of wisdom untold. Engage
-                in review, a scholarly exchange, Where minds refine, and
-                boundaries rearrange.
+                To the scholars and dreamers, Afrika Journals stands as your
+                platform. Share your insights, let your research unfold. Submit
+                your journals—treasures of wisdom untold. Engage in review, a
+                scholarly exchange, where minds refine, and boundaries rearrange.
               </p>
             </div>
           </motion.div>
 
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-12 bg-[#AFEEEE] text-black px-8 py-3 rounded-full text-lg font-semibold
-                       hover:bg-white transition-all duration-300 transform hover:scale-105
-                       shadow-lg hover:shadow-[#AFEEEE]/50"
+            className="mt-12"
           >
-            Join Our Academic Community
-          </motion.button>
+            <a
+              href="https://afrijour.web.app/sign-in"
+              className="bg-[#AFEEEE] text-black px-8 py-3 rounded-full text-lg font-semibold
+                     hover:bg-white transition-all duration-300 transform hover:scale-105
+                     shadow-lg hover:shadow-[#AFEEEE]/50"
+            >
+              Join Our Academic Community
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Scroll Indicator */}

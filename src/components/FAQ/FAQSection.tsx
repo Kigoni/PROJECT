@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import FAQAccordion from './FAQAccordion';
-import QAForm from './QAForm';
+// import QAForm from './QAForm';
 
 const faqs = [
   {
@@ -59,13 +59,13 @@ export default function FAQSection() {
             <FAQAccordion faqs={faqs} />
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <QAForm />
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </section>
