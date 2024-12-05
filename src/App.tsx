@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { motion } from "framer-motion";
 import DisclaimerPopup from "./components/ui/DisclaimerPopup";

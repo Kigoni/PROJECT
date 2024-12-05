@@ -13,4 +13,16 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'], // Keeps 'lucide-react' out of optimization
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // If the chunk is from node_modules, it will be bundled into a separate vendor.js
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
 });
