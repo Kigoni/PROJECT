@@ -70,15 +70,15 @@ const Footer: React.FC<FooterProps> = ({ translation }) => {
           <div className="lg:col-span-2">
             <div className="flex flex-col gap-6">
               <div className="h-12 w-48 bg-primary/10 rounded flex items-center justify-center">
-                <span className="text-yellow-500 text-primary font-bold text-xl">AFRIKA JOURNALS</span>
+                <span className="text-primary font-bold text-xl">AFRIKA JOURNALS</span>
               </div>
-              <p className="text-yellow-500 max-w-md">
-                {translation?.footer?.description || 
+              <p className="text-black max-w-md">
+                {translation?.footer?.description ||
                   "For more information about our services, privacy practices, or terms of use, please visit the relevant sections below. Connect with us on social media to stay updated on the latest news and features."}
               </p>
-              <div className="text-yellow-500 flex flex-col gap-4">
-                <a href={`mailto:${translation?.footer?.contactEmail || 'info@afrijour.com'}`} 
-                   className="text-yellow-500 text-primary hover:text-primary/80 transition-colors">
+              <div className="text-black flex flex-col gap-4">
+                <a href={`mailto:${translation?.footer?.contactEmail || 'info@afrijour.com'}`}
+                   className="text-black text-primary hover:text-primary/80 transition-colors">
                   {translation?.footer?.contactEmail || "info@afrijour.com"}
                 </a>
                 <SocialLinks />
@@ -99,8 +99,8 @@ const Footer: React.FC<FooterProps> = ({ translation }) => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2 text-gray-400">
               <GlobeIcon size={20} />
-              <select 
-                className="bg-transparent border-none focus:ring-0 cursor-pointer text-yellow-300 hover:text-yellow-500"
+              <select
+                className="bg-transparent border-none focus:ring-0 cursor-pointer text-black hover:text-black"
                 defaultValue="en"
               >
                 <option value="en">English</option>

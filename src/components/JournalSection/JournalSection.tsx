@@ -35,40 +35,46 @@ export default function JournalSection() {
   });
 
   return (
-    <section className="relative py-24 bg-gradient-to-b from-gray-900 via-gray-900 to-black overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_25%),radial-gradient(circle_at_70%_60%,rgba(147,51,234,0.05),transparent_25%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(236,72,153,0.05),transparent_25%)]" />
-      
-      <div className="container relative mx-auto px-4">
+    <section className="relative py-24 bg-[#dff7f7] overflow-hidden">
+  {/* Background decorative elements */}
+  {/* If you want to completely remove decorative background gradients, delete the divs below */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_25%),radial-gradient(circle_at_70%_60%,rgba(147,51,234,0.05),transparent_25%)]" />
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(236,72,153,0.05),transparent_25%)]" />
+  
+  <div className="container relative mx-auto px-4">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className="text-center mb-16"
+    >
+     <h2 className="text-black text-5xl font-bold text-center mb-6">
+  <span className="underline decoration-cyan-400 decoration-2">African</span>{" "}
+  <span className="underline decoration-purple-400 decoration-2">Research</span>{" "}
+  <span className="underline decoration-cyan-400 decoration-2">Excellence</span>
+</h2>
+
+
+
+      <p className="text-black max-w-2xl mx-auto text-lg">
+        Discover groundbreaking research and scholarly works from across the African continent
+      </p>
+    </motion.div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      {features.map((feature, index) => (
         <motion.div
-          ref={ref}
+          key={feature.title}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6, delay: index * 0.2 }}
         >
-          <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-6">
-            African Research Excellence
-          </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-            Discover groundbreaking research and scholarly works from across the African continent
-          </p>
+          <FeatureCard {...feature} />
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              <FeatureCard {...feature} />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+      ))}
+    </div>
+  </div>
+</section>
   );
 }

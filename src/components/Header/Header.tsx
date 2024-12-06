@@ -24,8 +24,8 @@ const Header: React.FC = () => {
             <img
               src="/logo.png" // Replace with the correct path to your logo
               alt="Afrika Journals Logo"
-              className="h-20 md:h-12" // Adjusted logo size
-            />
+              className="h-14 md:h-9" // Reduced logo size to 70% of the original
+              />
             {/* File Path Text */}
             <span className="text-sm text-gray-400 mt-2 block">
               Afrika Journals

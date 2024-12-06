@@ -65,11 +65,11 @@ function App() {
             <Articles />
             <WorldMap />
 
-            {/* Floating Button fixed to the right edge, manually moved down */}
+            {/* Floating Button */}
             <div
               className="fixed right-0"
               style={{
-                top: '10%', // Adjust this value to move the button down
+                top: "10%", // Adjust this value to move the button down
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -79,16 +79,22 @@ function App() {
               <FloatingButton onClick={() => setIsFormOpen(true)} />
             </div>
 
-            {/* Chatbot Button fixed below the Floating Button */}
+            {/* Chatbot Button */}
             <div
               className="fixed right-0"
               style={{
-                top: '75%', // Adjust this value to move the Chatbot icon down
+                top: "75%", // Adjust this value to move the Chatbot icon down
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 width: "fit-content",
               }}
+              role="button"
+              tabIndex={0}
+              onClick={() => console.log("Chatbot button clicked")}
+              onKeyDown={(e) =>
+                e.key === "Enter" && console.log("Chatbot button clicked")
+              }
             >
               <Chatbot
                 title="Afrika Journals Assistant"
@@ -98,7 +104,7 @@ function App() {
               />
             </div>
 
-            {/* ContactForm modal when isFormOpen is true */}
+            {/* ContactForm Modal */}
             {isFormOpen && <ContactForm onClose={() => setIsFormOpen(false)} />}
 
             {/* Other Sections */}

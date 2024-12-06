@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import FAQAccordion from './FAQAccordion';
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import FAQAccordion from "./FAQAccordion";
 // import QAForm from './QAForm';
 
 const faqs = [
@@ -29,7 +29,7 @@ export default function FAQSection() {
   });
 
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-900 via-gray-900 to-black relative overflow-hidden">
+    <section className="py-24 bg-[#CCD6EB] relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_25%),radial-gradient(circle_at_70%_60%,rgba(147,51,234,0.05),transparent_25%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(236,72,153,0.05),transparent_25%)]" />
@@ -45,7 +45,7 @@ export default function FAQSection() {
           <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-6">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-700 max-w-2xl mx-auto text-lg">
             We encourage our students, researchers, and professors to ask us any questions regarding our journals. Our skilled mentors are ready to answer all your questions 24/7.
           </p>
         </motion.div>

@@ -21,7 +21,7 @@ const Worldmap: React.FC = () => {
       </header>
 
       {/* Map Container */}
-      <div className="relative w-3/5 h-3/5 mx-auto shadow-lg rounded-lg overflow-hidden border border-gray-300">
+      <div className="relative w-3/5 h-3/5 mx-auto  rounded-lg overflow-hidden ">
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale: 324, center: [20, 5] }}
